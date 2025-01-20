@@ -22,23 +22,19 @@ class UserProfileManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, name, password):
         """
-        Crée et sauvegarde un superutilisateur avec les droits d'administration
-        Args:
-            email: Email du superutilisateur (obligatoire)
-            password: Mot de passe du superutilisateur (obligatoire)
-        Raises:
-            ValueError: Si l'email ou le mot de passe n'est pas fourni
-                    """
-        if not email:
-            raise ValueError('Superusers must have an email address')
-        if not password:
-            raise ValueError('Superusers must have a password')
-        user = self.create_user(email, password)
-        user.is_staff = True
+        Crée et sauvegarde un super utilisateur
+        """
+        user = self.create_user(
+            email=email,
+            name=name,
+            password=password
+        )
         user.is_superuser = True
+        user.is_staff = True
         user.save(using=self._db)
+        return user
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """
