@@ -5,7 +5,7 @@ from api import serializers
 
 class HelloApiView(APIView):
     """Test API view"""
-
+    serializer_class = serializers.HelloSerializer
     def get(self, request, format=None):
         """Returns a list of APIView features"""
         an_apiview = [
@@ -19,7 +19,8 @@ class HelloApiView(APIView):
     
     def post(self, request, format=None):
         """Create a hello message with our name"""
-        serializer = serializers.HelloSerializer(data=request.data)
+
+        serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
             name = serializer.validated_data.get('name')
@@ -29,3 +30,15 @@ class HelloApiView(APIView):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST
             )
+        
+    def put(self, request, pk=None):
+        """Handle updating an object"""
+        return Response({'method': 'PUT'})
+
+    def patch(self, request, pk=None):
+        """Handle a partial update of an object"""
+        return Response({'method': 'PATCH'})
+
+    def delete(self, request, pk=None):
+        """Delete an object"""
+        return Response({'method': 'DELETE'})
