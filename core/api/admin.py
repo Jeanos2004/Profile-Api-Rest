@@ -1,5 +1,6 @@
 from django.contrib import admin
-from api.models import UserProfile
+from api.models import UserProfile, ProfileFeedItem
 
 admin.site.register(UserProfile)
-# Register your models here.
+admin.site.register(ProfileFeedItem)
+
